@@ -1,5 +1,5 @@
 function Stars({ rating }: StarsProps) {
-    const goldStars = rating; // TODO: would be a good idea to check if float
+    const goldStars = rating;
 
     return (
         <div className="flex flex-row" title={`${goldStars} stars`}>
