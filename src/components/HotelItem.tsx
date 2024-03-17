@@ -33,6 +33,8 @@ function HotelItem({ hotel }: HotelItemProps) {
         },
     } = hotel;
 
+    console.log(description);
+
     if (!hotel) return <Loading />;
 
     return (
