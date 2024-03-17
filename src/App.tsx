@@ -1,38 +1,61 @@
 import { useHotelsQuery } from './hooks/useHotelsQuery';
-import HotelItem from './components/HotelItem';
-function App() {
-    /* 
-  TODO: add button to load 5 items
-  render 5 items as per the mockups in pdf
-  load more button, onClick => load 5 more
-  
-  */
 
+import type { Document } from '@contentful/rich-text-types';
+
+import HotelItem from './components/HotelItem';
+import Button from './components/common/Button';
+import Loading from './components/common/Loading';
+import ErrorMessage from './components/common/ErrorMessage';
+
+export type Hotel = {
+    sys: {
+        id: string;
+    };
+    name: string;
+    description: {
+        json: Document;
+    };
+    rating: number;
+    city: string;
+    country: string;
+    price: {
+        value: string;
+        symbol: string;
+    };
+    imagesCollection: {
+        items: Array<{
+            url: string;
+            title: string;
+        }>;
+    };
+    startDate: string;
+    endDate: string;
+};
+
+function App() {
     const { loading, error, hotels, limit, loadMoreHotels } = useHotelsQuery();
 
     const handleLoadMore = () => {
         loadMoreHotels();
     };
 
-    if (loading && !hotels.length)
-        return (
-            <p>Loading... {/* TODO: add loading comp (maybe animation?) */}</p>
-        );
+    if (loading && !hotels.length) return <Loading />;
 
-    if (error) return <p>Error {/* TODO: add error handler or component */}</p>;
+    if (error) return <ErrorMessage />;
+
     return (
-        <div className="grid place-items-center">
-            <h1>Holiday Pirates Challenge</h1>
-
+        <div className="mx-auto max-w-full p-3 md:max-w-5xl">
+            <h1 className="text-pirate my-5">Holiday Pirates</h1>
             {hotels.map((hotel: Hotel, index: number) => (
                 <HotelItem key={index} hotel={hotel} />
             ))}
             {hotels.length < limit ? (
                 <div className="grid min-h-40 place-items-center">
-                    <button onClick={handleLoadMore} disabled={loading}>
-                        {loading ? 'Loading...' : 'Load Hotels'}
-                        {/* TODO: use reusable button here */}
-                    </button>
+                    <Button
+                        label={loading ? 'Loading...' : 'Load Hotels'}
+                        onClick={handleLoadMore}
+                        disabled={loading}
+                    />
                 </div>
             ) : null}
         </div>
@@ -40,8 +63,3 @@ function App() {
 }
 
 export default App;
-
-type Hotel = {
-    name: string;
-    description: string;
-};

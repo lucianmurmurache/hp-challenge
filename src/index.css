@@ -20,3 +20,25 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    h1 {
+        @apply text-center text-3xl font-bold;
+    }
+
+    h2 {
+        @apply text-2xl font-semibold;
+    }
+
+    h3 {
+        @apply text-xl font-normal;
+    }
+
+    .button {
+        @apply bg-pirate hover:bg-pirate/90 min-w-32 rounded-md px-4 py-3 text-white shadow transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed;
+    }
+
+    .hotel-item-wrapper {
+        @apply bg-pirate-light text-pirate mx-auto my-10 max-w-full overflow-hidden rounded-md border shadow-lg transition-shadow duration-200 md:max-w-5xl;
+    }
+}
